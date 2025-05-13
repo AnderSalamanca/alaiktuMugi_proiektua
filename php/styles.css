@@ -1,0 +1,205 @@
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  display: flex;
+  align-items: center;
+}
+
+/* Cada item en línea */
+li {
+  display: inline-block;
+}
+
+/* Estilo para el logo */
+.logo {
+  height: 40px; /* Ajusta el tamaño de la imagen */
+  margin-left: 10px;
+}
+
+/* Estilos para los enlaces */
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+/* El li que contiene el botón se empuja a la derecha */
+.login-button {
+  margin-left: auto;
+}
+
+/* Estilos para el botón "Iniciar sesión" */
+.button-right {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  padding: 10px 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+  border-radius: 10px;
+}
+
+.button-login {
+  background-color: rgb(0, 0, 0);
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+  border-radius: 10px;
+}
+
+.button-right:hover {
+  background-color: rgb(231, 231, 231);
+}
+
+/* Media Query para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+  ul {
+    /* Cambia la dirección del flex para apilar verticalmente */
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  li {
+    display: block;
+    width: 100%;
+  }
+  
+  /* Ajusta el padding y alineación de los enlaces para mayor comodidad */
+  li a,
+  .button-right,
+  .button-login {
+    text-align: left;
+    padding: 10px 20px;
+  }
+  
+  /* Quita el margen automático del login para centrar o alinear según prefieras */
+  .login-button {
+    margin-left: 0;
+  }
+}
+
+
+footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .footer-logo img {
+      height: 50px; /* Ajusta el tamaño de tu logo */
+    }
+    .footer-nav {
+      display: flex;
+      gap: 15px;
+    }
+    .footer-nav a {
+      color:rgb(255, 255, 255);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .footer-nav a:hover {
+      text-decoration: underline;
+    }
+    .footer-social {
+      display: flex;
+      gap: 10px;
+    }
+    .footer-social a img {
+      height: 20px;
+      width: 20px;
+    }
+    .footer-bottom {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 12px;
+    }
+    /* Estilo responsivo */
+    @media (max-width: 768px) {
+      .footer-top {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer-nav {
+        margin: 10px 0;
+      }
+      .footer-social {
+        justify-content: center;
+      }
+    }
+
+
+   .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilos para el bloque de texto y el de imagen */
+    .text,
+    .image {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .text h2 {
+      font-size: 28px;
+      color: #000000;
+      margin-bottom: 10px;
+    }
+
+    .text p {
+      font-size: 16px;
+      color: #000000;
+      line-height: 1.4;
+    }
+
+    .image img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    /* Alternar disposición: en los contenedores pares, se invierte el orden */
+    .container:nth-of-type(even) {
+      flex-direction: row-reverse;
+    }
+
+    /* Media query para dispositivos móviles */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        text-align: center;
+      }
+      .container:nth-of-type(even) {
+        flex-direction: column;
+      }
+      .image,
+      .text {
+        padding: 10px;
+      }
+    }
