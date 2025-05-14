@@ -9,5 +9,5 @@
   <li><a href="#about">Guri buruz</a></li>
   
   <!-- Botón a la derecha -->
-  <li class="login-button"><button class="button-right" >Saioa hasi</button></li>
+  <li class="login-button"><button class="button-right" onclick="window.location.href='login.php';">Saioa hasi</button></li>
 </ul>

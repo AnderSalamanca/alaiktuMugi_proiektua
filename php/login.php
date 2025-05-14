@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows == 1) {
         $erabiltzailea = $result->fetch_assoc();
         if ($pasahitza == $erabiltzailea['pasahitza']) {
-            $_SESSION['erabiltzailea_id'] = $erabiltzailea['iderabiltzailea'];
+            $_SESSION['erabiltzailea'] = $erabiltzailea['iderabiltzailea'];
             $_SESSION['rola'] = $erabiltzailea['rola'];
 
             // Redirigir según el rol

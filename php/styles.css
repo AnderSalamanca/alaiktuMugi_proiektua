@@ -203,3 +203,55 @@ footer {
         padding: 10px;
       }
     }
+
+    /* =====================
+   Estilos para la tabla de historial
+   ===================== */
+table.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px auto;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table.table thead {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+table.table th,
+table.table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+}
+
+table.table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table.table tr:hover {
+  background-color: #e0e0e0;
+}
+
+/* Mensaje alternativo si no hay viajes en el historial */
+.message {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+  margin-top: 20px;
+}
+
+/* Ajuste responsive para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+  table.table {
+    font-size: 12px;
+  }
+  table.table th,
+  table.table td {
+    padding: 8px 10px;
+  }
+}
