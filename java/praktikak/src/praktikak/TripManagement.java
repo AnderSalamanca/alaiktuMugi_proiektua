@@ -20,7 +20,11 @@ public class TripManagement {
                 int langilea_idlangilea = rs.getInt("langilea_idlangilea");
                 String hasiera_ordua = rs.getString("hasiera_ordua");
                 String bukaera_ordua = rs.getString("bukaera_ordua");
-                System.out.println("Bidaia ID: " + idbidaiak + ", Erabiltzailea ID: " + iderabiltzailea + ", Gidari ID: " + langilea_idlangilea + ", Irteera ordua: " + hasiera_ordua + ", Iristeko ordua: " + bukaera_ordua);
+                System.out.println("Bidaia ID: " + idbidaiak 
+                		+ ", Erabiltzailea ID: " + iderabiltzailea + ","
+                		+ "  Gidari ID: " + langilea_idlangilea 
+                		+ ", Irteera ordua: " + hasiera_ordua
+                		+ ", Iristeko ordua: " + bukaera_ordua);
             }
         } catch (SQLException e) {
             System.err.println("Errore bat gertatu da bidaien datuak lortzerakoan.");

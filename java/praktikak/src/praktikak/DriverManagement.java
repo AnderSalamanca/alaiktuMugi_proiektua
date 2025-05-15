@@ -15,7 +15,7 @@ public class DriverManagement {
                     l.idlangilea,
                     l.izena,
                     l.abizena,
-                    l.nan,
+                    l.nan,	
                     e.posta,
                     t.matrikula,
                     t.edukiera
@@ -33,12 +33,16 @@ public class DriverManagement {
                     String izena = rs.getString("izena");
                     String abizena = rs.getString("abizena");
                     String nan = rs.getString("nan");
-                    String email = rs.getString("posta");
+                    String posta = rs.getString("posta");
                     String matrikula = rs.getString("matrikula");
                     String edukiera = rs.getString("edukiera");
 
-                    System.out.println("ID: " + id + ", Izena: " + izena + " " + abizena +
-                            ", NAN: " + nan + ", Emaila: " + email + ", matrikula: " + matrikula +
+                    System.out.println("ID: " + id + 
+                    		", Izena: " + izena +
+                    		", Abizena" + abizena +
+                            ", NAN: " + nan + 
+                            ", Emaila: " + posta + 
+                            ", matrikula: " + matrikula +
                             ", Edukiera: " + edukiera);
                 }
             }

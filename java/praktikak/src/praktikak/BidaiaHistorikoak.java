@@ -22,16 +22,17 @@ public class BidaiaHistorikoak {
 
             // Datuak irakurri eta gorde
             while (rs.next()) {
-                int historyId = rs.getInt("history_id");
-                int tripId = rs.getInt("trip_id");
-                Timestamp hasieraOrduna = rs.getTimestamp("hasiera_ordua");
-                Timestamp amaieraOrduna = rs.getTimestamp("amaiera_ordua");
-                String oharrak = rs.getString("oharrak");
+                int idhistoriala = rs.getInt("idhistoriala");
+                int idbidaiak = rs.getInt("idabidaiak");
+                Timestamp hasieraOrdua = rs.getTimestamp("hasiera_ordua");
+                Timestamp amaieraOrdua = rs.getTimestamp("amaiera_ordua");
 
                 // String batean gordetzen dugu historialaren informazioa
-                String historialInfo = "History ID: " + historyId + ", Trip ID: " + tripId + 
-                                       ", Hasiera: " + hasieraOrduna + ", Amaiera: " + amaieraOrduna +
-                                       ", Oharrak: " + oharrak;
+                String historialInfo = "History ID: " + idhistoriala + 
+                					   ", Trip ID: " + idbidaiak + 
+                                       ", Hasiera: " + hasieraOrdua + 
+                                       ", Amaiera: " + amaieraOrdua ;
+                                      
                 historial.add(historialInfo);
             }
         } catch (SQLException e) {
@@ -42,14 +43,13 @@ public class BidaiaHistorikoak {
     }
 
     // Bidaia historiko bat gehitu
-    public void gehituBidaiaHistorikoa(int tripId, Timestamp hasieraOrduna, Timestamp amaieraOrduna, String oharrak) {
-        String sql = "INSERT INTO Bidaia_Historikoak (trip_id, hasiera_ordua, amaiera_ordua, oharrak) VALUES (?, ?, ?, ?)";
+    public void gehituBidaiaHistorikoa(int idbidaiak, Timestamp hasieraOrdua, Timestamp amaieraOrdua) {
+        String sql = "INSERT INTO Bidaia_Historikoak (idbidaiak, hasiera_ordua, amaiera_ordua, ) VALUES (?, ?, ?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, tripId);
-            pstmt.setTimestamp(2, hasieraOrduna);
-            pstmt.setTimestamp(3, amaieraOrduna);
-            pstmt.setString(4, oharrak);
+            pstmt.setInt(1, idbidaiak);
+            pstmt.setTimestamp(2, hasieraOrdua);
+            pstmt.setTimestamp(3, amaieraOrdua);
             pstmt.executeUpdate();
             System.out.println("Bidaia historikoa gehitu da!");
         } catch (SQLException e) {

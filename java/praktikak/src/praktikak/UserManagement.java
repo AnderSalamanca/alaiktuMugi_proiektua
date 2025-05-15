@@ -32,8 +32,12 @@ public class UserManagement {
                 String abizena = rs.getString("abizena");
                 String nan = rs.getString("nan");
 
-                System.out.println("ID: " + id + ", Izena: " + izena + " " + abizena +
-                        ", NAN: " + nan + ", Eposta: " + posta + ", Rola: " + rola);
+                System.out.println("ID: " + id + 
+                		", Izena: " + izena + 
+                		", Abizena" + abizena +
+                        ", NAN: " + nan +
+                        ", Eposta: " + posta +
+                        ", Rola: " + rola);
             }
 
         } catch (SQLException e) {
