@@ -17,23 +17,22 @@ require 'konexioa.php';
 <?php
 if (isset($_SESSION['erabiltzailea'])) {
     // Se asume que la sesión almacena el id del usuario registrado
-    $erabiltzailea_id = $_SESSION['erabiltzailea'];
-
+    $idbezeroa = $_SESSION['idbezeroa'];
     // Consulta SQL para obtener el historial de viajes del cliente actual
     $sql = "SELECT 
-                h.idhistoriala, 
-                h.data, 
-                h.hasiera_ordua, 
-                h.bukaera_ordua, 
-                h.hasiera_kokapena, 
-                h.helmuga_kokapena, 
-                h.xehetasunak,
-                l.izena,
-                l.abizena
-            FROM historiala h
-            JOIN langilea l ON h.idgidaria = l.idlangilea
-            WHERE h.idbezeroa = '$erabiltzailea_id'
-            ORDER BY h.data DESC";
+            h.idhistoriala, 
+            h.data, 
+            h.hasiera_ordua, 
+            h.bukaera_ordua, 
+            h.hasiera_kokapena, 
+            h.helmuga_kokapena, 
+            h.xehetasunak,
+            COALESCE(l.izena, 'Gidari gabe') AS izena,
+            COALESCE(l.abizena, '') AS abizena
+        FROM historiala h
+        LEFT JOIN langilea l ON h.idgidaria = l.idlangilea
+        WHERE h.idbezeroa = '$idbezeroa'
+        ORDER BY h.data DESC";
 
     $result = $conn->query($sql);
 

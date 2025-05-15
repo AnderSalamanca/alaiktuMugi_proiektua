@@ -21,8 +21,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Redirigir según el rol
             if ($erabiltzailea['rola'] == 'bezeroa') {
+                $query_bezeroa = "SELECT idbezeroa FROM bezeroa WHERE erabiltzailea_iderabiltzailea = ?";
+                $stmt_bezeroa = $conn->prepare($query_bezeroa);
+                $stmt_bezeroa->bind_param("i", $_SESSION['erabiltzailea']);
+                $stmt_bezeroa->execute();
+                $result_bezeroa = $stmt_bezeroa->get_result();
+
+                if ($result_bezeroa->num_rows == 1) {
+                    $_SESSION['idbezeroa'] = $result_bezeroa->fetch_assoc()['idbezeroa'];
+                }
                 header("Location: bezeroa.php");
             } else {
+                $query_langilea = "SELECT idlangilea FROM langilea WHERE erabiltzailea_iderabiltzailea = ?";
+                $stmt_langilea = $conn->prepare($query_langilea);
+                $stmt_langilea->bind_param("i", $_SESSION['erabiltzailea']);
+                $stmt_langilea->execute();
+                $result_langilea = $stmt_langilea->get_result();
+
+                if ($result_langilea->num_rows == 1) {
+                    $_SESSION['idlangilea'] = $result_langilea->fetch_assoc()['idlangilea'];
+                }
                 header("Location: taxista.php");
             }
             exit();

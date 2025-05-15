@@ -9,5 +9,19 @@
   <li><a href="#about">Guri buruz</a></li>
   
   <!-- Botón a la derecha -->
-  <li class="login-button"><button class="button-right" onclick="window.location.href='login.php';">Saioa hasi</button></li>
+   <?php
+   if(isset($_SESSION['erabiltzailea'])){
+    ?>
+
+    <li class="login-button"><button class="button-right" onclick="window.location.href='login.php';">Saioa Itxi</button></li>
+  
+  <?php
+   } else{
+    ?>
+
+    <li class="login-button"><button class="button-right" onclick="window.location.href='login.php';">Saioa hasi</button></li>
+  
+  <?php
+  }
+  ?>
 </ul>
