@@ -40,8 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if ($result_langilea->num_rows == 1) {
                     $_SESSION['idlangilea'] = $result_langilea->fetch_assoc()['idlangilea'];
+                    header("Location: taxista.php");
                 }
-                header("Location: taxista.php");
+                
             }
             exit();
         } else {
