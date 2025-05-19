@@ -9,26 +9,26 @@
       <div class="col-md-4 text-center mb-3 mb-md-0">
         <ul class="list-unstyled d-flex justify-content-center mb-0">
           <li class="mx-2">
-            <a href="#about" class="text-light text-decoration-none">Sobre Nosotros</a>
+            <a href="guriburuz.php" class="text-light text-decoration-none">Guri buruz</a>
           </li>
           <li class="mx-2">
-            <a href="#services" class="text-light text-decoration-none">Servicios</a>
+            <a href="berriak.php" class="text-light text-decoration-none">Berriak</a>
           </li>
           <li class="mx-2">
-            <a href="#contact" class="text-light text-decoration-none">Contacto</a>
+            <a href="kontaktua.php" class="text-light text-decoration-none">Kontaktua</a>
           </li>
         </ul>
       </div>
       <!-- Columna para íconos de redes sociales -->
       <div class="col-md-4 text-center text-md-end">
         <a href="#" class="text-light mx-1">
-          <img src="irudiak/facebook-icon.png" alt="Facebook" style="max-height: 24px;">
+          <i class="fab fa-facebook fa-lg"></i>
         </a>
         <a href="#" class="text-light mx-1">
-          <img src="irudiak/twitter-icon.png" alt="Twitter" style="max-height: 24px;">
+          <i class="fab fa-twitter fa-lg"></i>
         </a>
         <a href="#" class="text-light mx-1">
-          <img src="irudiak/instagram-icon.png" alt="Instagram" style="max-height: 24px;">
+          <i class="fab fa-instagram fa-lg"></i>
         </a>
       </div>
     </div>
@@ -41,3 +41,6 @@
     </div>
   </div>
 </footer>
+
+<!-- Incluye Bootstrap JS Bundle con Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Inicio | Alaiktumugi</title>
+   <meta charset="UTF-8">
+  <title>Tu Página</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-  <?php include 'navbar.php'; ?>
+  <?php 
+  $activePage = 'main';
+  include 'navbar.php'; 
+  
+  ?>
 
   <!-- Sección 1 -->
   <div class="container my-5">
     <div class="row align-items-center">
       <!-- Columna de texto -->
       <div class="col-md-6">
-        <h2>¿Por qué elegir Alaiktumugi?</h2>
-        <p>Un servicio rápido, seguro y confiable que conecta pasajeros con conductores de confianza.</p>
+        <h2>Zergatik Alaiktumugi aukeratu?</h2>
+        <p>Zerbitzu azkarra, segurua eta fidagarria, bidaiariak konfiantzazko gidariekin konektatzen dituena.</p>
         <!-- Botón modificado a negro -->
         <button class="btn btn-dark" onclick="window.location.href='login.php';">Saioa hasi</button>
       </div>
@@ -32,8 +39,8 @@
     <div class="row align-items-center">
       <!-- Se invierte el orden en dispositivos medianos y superiores -->
       <div class="col-md-6 order-md-2">
-        <h2>Viaja con comodidad</h2>
-        <p>Los mejores autos y la mejor experiencia para garantizar viajes placenteros.</p>
+        <h2>Eroso bidaiatu</h2>
+        <p>Auto onenak eta esperientzia onena bidaia atseginak bermatzeko.</p>
         <!-- Botón modificado a negro -->
         <button class="btn btn-dark" onclick="window.location.href='login.php';">Saioa hasi</button>
       </div>

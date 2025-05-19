@@ -1,7 +1,7 @@
 <?php
 session_start();
 // Si no se ha definido $activePage, se le asigna un valor vacío (puedes cambiarlo si lo prefieres)
-if(!isset($activePage)) {
+if (!isset($activePage)) {
     $activePage = '';
 }
 ?>
@@ -26,7 +26,7 @@ if(!isset($activePage)) {
           <a class="nav-link <?php echo ($activePage == 'main') ? 'active' : ''; ?>" aria-current="page" href="main.php">Hasiera</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php echo ($activePage == 'news') ? 'active' : ''; ?>" href="#news">Berriak</a>
+          <a class="nav-link <?php echo ($activePage == 'news') ? 'active' : ''; ?>" href="berriak.php">Berriak</a>
         </li>
         <li class="nav-item">
           <a class="nav-link <?php echo ($activePage == 'contact') ? 'active' : ''; ?>" href="kontaktua.php">Kontaktua</a>
@@ -34,9 +34,20 @@ if(!isset($activePage)) {
         <li class="nav-item">
           <a class="nav-link <?php echo ($activePage == 'about') ? 'active' : ''; ?>" href="guriburuz.php">Guri buruz</a>
         </li>
+        <?php if (isset($_SESSION['erabiltzailea'])): ?>
+          <?php if (isset($_SESSION['rola']) && $_SESSION['rola'] === 'taxista'): ?>
+            <li class="nav-item">
+              <a class="nav-link <?php echo ($activePage == 'taxista') ? 'active' : ''; ?>" href="taxistamenua.php">Taxista Menua</a>
+            </li>
+          <?php else: ?>
+            <li class="nav-item">
+              <a class="nav-link <?php echo ($activePage == 'bezero') ? 'active' : ''; ?>" href="bezeromenua.php">Bezero Menua</a>
+            </li>
+          <?php endif; ?>
+        <?php endif; ?>
       </ul>
       <!-- Botón de login o logout a la derecha -->
-      <?php if(isset($_SESSION['erabiltzailea'])): ?>
+      <?php if (isset($_SESSION['erabiltzailea'])): ?>
         <button class="btn btn-outline-light" onclick="window.location.href='logout.php';">Saioa Itxi</button>
       <?php else: ?>
         <button class="btn btn-outline-light" onclick="window.location.href='login.php';">Saioa hasi</button>
