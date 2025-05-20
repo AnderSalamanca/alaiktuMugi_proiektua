@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html lang="eu">
+
 <head>
-   <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <title>Tu Página</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap CSS -->
+  <!-- Bootstrap CSS: Diseinu eta estiloak kargatzeko -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome CSS -->
+  <!-- Font Awesome CSS: Ikonoak eta bestelako irudiak erraz ikusteko -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
+  <!-- Nabigazio barra sartzen dugu -->
   <?php
+  // Aktibatutako orriaren eremua ezartzen dugu
   $activePage = 'news';
-  include 'navbar.php'; 
+  include 'navbar.php';
   ?>
 
+  <!-- Eduki nagusia: Albisteak eta Berriak -->
   <div class="container my-5">
+    <!-- Orriaren izenburua -->
     <h1 class="mb-4 text-center">Alaiktumugi-ren Albisteak eta Berriak</h1>
-    
+
     <!-- Albiste 1 -->
     <div class="card mb-4">
       <div class="card-body">
+        <!-- Albistearen izenburua -->
         <h5 class="card-title">Aplikazio berria aurkeztua</h5>
+        <!-- Albistearen testua -->
         <p class="card-text">
           Alaiktumugi-k bere bezeroei berritzaile asko eskaintzeko asmoz aplikazio berria aurkeztu du.
           Aplikazio honek erreserba azkarrak, ordainketa seguruak eta erabiltzaile esperientzia hobetzen lagunduko dizkio, interfaze moderno eta intuitibo baten bidez.
@@ -31,11 +39,13 @@
         </p>
       </div>
     </div>
-    
+
     <!-- Albiste 2 -->
     <div class="card mb-4">
       <div class="card-body">
+        <!-- Albistearen izenburua -->
         <h5 class="card-title">Aurkeztu gure Flota Ekoloxikoa</h5>
+        <!-- Albistearen testua -->
         <p class="card-text">
           Alaiktumugi-k iraunkortasun apustua indartzeko bere flota ekoloxikoa aurkeztu du.
           Vehikel berri hauek, hibrido eta elektriko teknologiari esker, karbono aztarna gutxiago uzteko diseinatuta daude eta bidaia ekonomiko eta erosoagoak eskaintzen dituzte.
@@ -44,11 +54,13 @@
         </p>
       </div>
     </div>
-    
+
     <!-- Albiste 3 -->
     <div class="card mb-4">
       <div class="card-body">
+        <!-- Albistearen izenburua -->
         <h5 class="card-title">Fidelizazio Programa Aurkeztua</h5>
+        <!-- Albistearen testua -->
         <p class="card-text">
           Gure bezero leialentzako baliabide berria aurkeztu dugu, eta hori gure zerbitzu pertsonalizatua eta kalitate handikoa indartzeko helburua du.
           Programa honek bezeroei sari bereziak, deskontuak eta promozio esklusiboak eskaintzen dizkie, era digitaleko erlazioetan oinarrituta.
@@ -57,14 +69,16 @@
         </p>
       </div>
     </div>
-  
+
   </div>
 
+  <!-- Oinarrizko atal: Footer -->
   <footer>
     <?php include 'footer.php'; ?>
   </footer>
 
-  <!-- Bootstrap JS Bundle (incluye Popper) -->
+  <!-- Bootstrap JS Bundle (Popper barne): Interakzioa eta Javascript funtzioak kargatzeko -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

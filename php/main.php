@@ -1,60 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="eu">
+
 <head>
-   <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <title>Tu Página</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap CSS -->
+  <!-- Bootstrap CSS: Diseinu erantzunkorra eta estilo orokorrak kargatzen ditu -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome CSS -->
+  <!-- Font Awesome CSS: Ikonoak erakusteko erabiltzen da -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
-  <?php 
+  <?php
+  // Nabigazio barra sartzen dugu eta orri aktiboa definitzen dugu
   $activePage = 'main';
-  include 'navbar.php'; 
-  
+  include 'navbar.php';
   ?>
 
-  <!-- Sección 1 -->
+  <!-- Lehenengo atala -->
   <div class="container my-5">
     <div class="row align-items-center">
-      <!-- Columna de texto -->
+      <!-- Testuaren zutabea -->
       <div class="col-md-6">
         <h2>Zergatik Alaiktumugi aukeratu?</h2>
         <p>Zerbitzu azkarra, segurua eta fidagarria, bidaiariak konfiantzazko gidariekin konektatzen dituena.</p>
-        <!-- Botón modificado a negro -->
+        <!-- Saioa hasteko botoia, beltzez definituta -->
         <button class="btn btn-dark" onclick="window.location.href='login.php';">Saioa hasi</button>
       </div>
-      <!-- Columna de imagen -->
+      <!-- Irudiaren zutabea -->
       <div class="col-md-6">
-        <img src="irudiak/argazki1.jpg" alt="Conductor 1" class="img-fluid rounded">
+        <img src="irudiak/argazki1.jpg" alt="Gidaria 1" class="img-fluid rounded">
       </div>
     </div>
   </div>
 
-  <!-- Sección 2 -->
+  <!-- Bigarren atala -->
   <div class="container my-5">
     <div class="row align-items-center">
-      <!-- Se invierte el orden en dispositivos medianos y superiores -->
+      <!-- Ordena aldatzen da pantaila handiagoetan -->
       <div class="col-md-6 order-md-2">
         <h2>Eroso bidaiatu</h2>
         <p>Auto onenak eta esperientzia onena bidaia atseginak bermatzeko.</p>
-        <!-- Botón modificado a negro -->
+        <!-- Saioa hasteko botoia, beltzez definituta -->
         <button class="btn btn-dark" onclick="window.location.href='login.php';">Saioa hasi</button>
       </div>
       <div class="col-md-6 order-md-1">
-        <img src="irudiak/argazki2.jpg" alt="Conductor 2" class="img-fluid rounded">
+        <img src="irudiak/argazki2.jpg" alt="Gidaria 2" class="img-fluid rounded">
       </div>
     </div>
   </div>
 
+  <!-- Footer -->
   <footer>
     <?php include 'footer.php'; ?>
   </footer>
 
-  <!-- Bootstrap JS Bundle with Popper -->
+  <!-- Bootstrap JS Bundle with Popper: Funtzionalitate interaktiboak kargatzeko -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

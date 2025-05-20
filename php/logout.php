@@ -1,13 +1,12 @@
 <?php
-session_start();
+session_start(); // Saioa abiarazi
 
-// Destruir todas las variables de sesión
+// Hainbat saio aldagaia ezabatzen dira
 $_SESSION = array();
 
-// Destruir la sesión
+// Saioa ezabatu
 session_destroy();
 
-// Redirigir a main.php
+// main.php-ra bideratu
 header("Location: main.php");
 exit();
-?>
