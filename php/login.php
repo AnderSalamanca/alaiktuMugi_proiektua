@@ -63,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="eu">
+
 <head>
     <meta charset="UTF-8">
     <title>Saioa Hasi</title>
@@ -72,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Font Awesome CSS kargatzen dugu -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body class="bg-light">
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="card p-4 shadow-lg" style="width: 400px;">
@@ -104,5 +106,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Bootstrap JS kargatzen dugu (erabakitako funtzio interaktiboentzako) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
 ```
