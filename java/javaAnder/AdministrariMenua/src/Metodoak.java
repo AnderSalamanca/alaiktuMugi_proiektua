@@ -122,11 +122,11 @@ public class Metodoak {
 	}
 
 	// Metodoa: ID-ren bidez gidaria ezabatu
-	public static boolean gidariEzabatu(int id) {
-		String sql = "DELETE FROM conductores WHERE id = ?";
+	public static boolean gidariEzabatu(int idlangilea) {
+		String sql = "DELETE erabiltzailea, langilea FROM erabiltzailea JOIN langilea ON erabiltzailea.iderabiltzailea = langilea.erabiltzailea_iderabiltzailea  WHERE langilea.idlangilea = ?";
 		try (Connection conn = Konexioa.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-			ps.setInt(1, id);
+			ps.setInt(1, idlangilea);
 			int erregistroKopurua = ps.executeUpdate();
 			return erregistroKopurua > 0;
 		} catch (SQLException ex) {
