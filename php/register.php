@@ -6,7 +6,7 @@ $message = ""; // Erabiltzaileari erakusteko mezuak gordetzeko aldagai
 // POST eskaera jasotzen bada, erabiltzailea erregistratzeko datuak prozesatzen ditugu
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $posta = $_POST['email']; // Erabiltzaileak sartu duen posta elektronikoa
-    $pasahitza = password_hash($_POST['contraseña'], PASSWORD_BCRYPT); // Pasahitza zifratu egiten dugu segurtasun handiagoa lortzeko
+    $pasahitza = ($_POST['contraseña']); // Pasahitza zifratu egiten dugu segurtasun handiagoa lortzeko
     $izena = $_POST['nombre']; // Erabiltzaileak sartu duen izena
     $abizena = $_POST['apellido']; // Erabiltzaileak sartu duen abizena
 
