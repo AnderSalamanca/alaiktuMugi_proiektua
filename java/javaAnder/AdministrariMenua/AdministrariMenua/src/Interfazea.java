@@ -31,7 +31,7 @@ public class Interfazea extends JFrame {
 	
 	// Taula eta bere modelua sortu
 	private JTable tableGidaria;
-	private DefaultTableModel modelGidaria;
+	public DefaultTableModel modelGidaria;
 	
 	// Filtroen textfield-ak hasieratu
 	private JTextField txtFiltroIzena, txtFiltroAbizena;
@@ -41,7 +41,7 @@ public class Interfazea extends JFrame {
 	
 	// Taula eta bere modelua sortu
 	private JTable tableHistorial;
-	private DefaultTableModel modelHistorial;
+	protected DefaultTableModel modelHistorial;
 	
 	// Filtroeen textfield-ak hasieratu
 	private JTextField txtFiltroData, txtFiltroGidaria, txtFiltroPrezioa;
@@ -134,7 +134,7 @@ public class Interfazea extends JFrame {
 		
 		
 
-		// SECCIÓN: Historiala
+		// Historiala kudeatzeko atala:
 		
 		
 		// Panelak
@@ -222,75 +222,8 @@ public class Interfazea extends JFrame {
 			
 			public void actionPerformed(ActionEvent e) {
 				
-				// Erabiltzailearen datuak (taula: erabiltzailea)
-				String posta = JOptionPane.showInputDialog(Interfazea.this, "Sartu erabiltzailearen posta:");
-				if (posta == null || posta.trim().isEmpty()) {
-					
-					JOptionPane.showMessageDialog(Interfazea.this, "Posta ezin da hutsik egon.");
-					return;
-					
-				}
-				String pasahitza = JOptionPane.showInputDialog(Interfazea.this, "Sartu erabiltzailearen pasahitza:");
-				if (pasahitza == null || pasahitza.trim().isEmpty()) {
-					JOptionPane.showMessageDialog(Interfazea.this, "Pasahitza ezin da hutsik egon.");
-					return;
-				}
-
-				// Langilearen datuak (taula: langilea)
-				String izena = JOptionPane.showInputDialog(Interfazea.this, "Sartu langilearen izena:");
-				if (izena == null || izena.trim().isEmpty()) {
-					JOptionPane.showMessageDialog(Interfazea.this, "Izena ezin da hutsik egon.");
-					return;
-				}
-				String abizena = JOptionPane.showInputDialog(Interfazea.this, "Sartu langilearen abizena:");
-				if (abizena == null || abizena.trim().isEmpty()) {
-					JOptionPane.showMessageDialog(Interfazea.this, "Abizena ezin da hutsik egon.");
-					return;
-				}
-				String nan = JOptionPane.showInputDialog(Interfazea.this, "Sartu langilearen NAN:");
-				if (nan == null || nan.trim().isEmpty()) {
-					JOptionPane.showMessageDialog(Interfazea.this, "NAN ezin da hutsik egon.");
-					return;
-				}
-
-				// Taxistaren datuak (taula: taxista)
-				String matrikula = JOptionPane.showInputDialog(Interfazea.this, "Sartu taxistaren matrikula:");
-				if (matrikula == null || matrikula.trim().isEmpty()) {
-					JOptionPane.showMessageDialog(Interfazea.this, "Matrikula ezin da hutsik egon.");
-					return;
-				}
-				String edukieraStr = JOptionPane.showInputDialog(Interfazea.this, "Sartu taxistaren edukiera:");
-				if (edukieraStr == null || edukieraStr.trim().isEmpty()) {
-					JOptionPane.showMessageDialog(Interfazea.this, "Edukiera ezin da hutsik egon.");
-					return;
-				}
-				String egoera = JOptionPane.showInputDialog(Interfazea.this, "Sartu taxistaren egoera:");
-				if (egoera == null || egoera.trim().isEmpty()) {
-					JOptionPane.showMessageDialog(Interfazea.this, "Egoera ezin da hutsik egon.");
-					return;
-				}
-				String tarifaStr = JOptionPane.showInputDialog(Interfazea.this, "Sartu taxistaren tarifa:");
-				if (tarifaStr == null || tarifaStr.trim().isEmpty()) {
-					JOptionPane.showMessageDialog(Interfazea.this, "Tarifa ezin da hutsik egon.");
-					return;
-				}
-
-				try {
-					double tarifa = Double.parseDouble(tarifaStr);
-					int edukiera = Integer.parseInt(edukieraStr);
-					// Llamada al método para crear el taxista con toda la información
-					boolean ondo = Metodoak.gidariGehitu(posta, pasahitza, // erabiltzailea
-							izena, abizena, nan, // langilea
-							matrikula, edukiera, egoera, tarifa // taxista
-					);
-					if (ondo) {
-						JOptionPane.showMessageDialog(Interfazea.this, "Taxista ondo sortu da.");
-					} else {
-						JOptionPane.showMessageDialog(Interfazea.this, "Taxista sortzean arazo bat egon da.");
-					}
-				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(Interfazea.this, "Tarifa ez da baliozko zenbaki bat.");
-				}
+				LangileaForm form = new LangileaForm(Interfazea.this);
+		        form.setVisible(true);
 			}
 		});
 
@@ -418,6 +351,7 @@ public class Interfazea extends JFrame {
 
 		modelGidaria.addTableModelListener(e -> {
 			
+			// Editatutako hilara eta zutabea jaso
 			int hilara = e.getFirstRow();
 			int zutabe = e.getColumn();
 
@@ -440,6 +374,12 @@ public class Interfazea extends JFrame {
 
 	}
 
+	/**
+	 * Historiala kargatzeko funtzioa, parametroak jasotzen ditu filtroak erabili baldin badira
+	 * @param dataFiltro Erabiltzaileak sartutako data
+	 * @param gidariaFiltro
+	 * @param prezioaFiltro
+	 */
 	private void historialaKargatu(String dataFiltro, String gidariaFiltro, String prezioaFiltro) {
 		
 		// Taula hustu
@@ -500,79 +440,128 @@ public class Interfazea extends JFrame {
 		}
 	}
 
+	/**
+	 * Gidariak kargatzeko metodoa
+	 * @param izena gidariaren izena filtroetatik jasota
+	 * @param abizena gidariaren abizena filtroetatik jasota
+	 */
 	private void gidariakKargatu(String izena, String abizena) {
-		modelGidaria.setRowCount(0); // Vaciar la tabla antes de cargar los datos
+		
+		// Taula hustu
+		modelGidaria.setRowCount(0);
 
+		// Sql kontsulta langile, erabiltzaile eta taxista taulatik datuak jasotzeko
 		String sql = "SELECT * FROM langilea JOIN erabiltzailea ON langilea.erabiltzailea_iderabiltzailea = erabiltzailea.iderabiltzailea JOIN taxista ON langilea.idlangilea= taxista.langilea_idlangilea WHERE langilea.mota = 'taxista'";
 
+		// Parametroak informazioarekin iritsi baldin badira kontsultari gehitu
 		if (!izena.isEmpty())
 			sql += " AND izena = ?";
 		if (!abizena.isEmpty())
 			sql += " AND abizena = ?";
 
+		// PreparedStatement bat prestatzen saiatu gure kontsultarekin
 		try (Connection conn = Konexioa.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
+			// Indexa hasieratu
 			int index = 1;
+			
+			// Kontsultan filtroetako informazioa gehitu
 			if (!izena.isEmpty())
 				ps.setString(index++, izena);
 			if (!abizena.isEmpty())
 				ps.setString(index++, abizena);
 
+			// ResultSet baten gorde gure exekuzioa
 			try (ResultSet rs = ps.executeQuery()) {
+				
+				// Hilaraka igarotzen joan
 				while (rs.next()) {
+					
+					// Hilara objetuak sortzen joan gure datu basetik jasotako informazioarekin
 					Object[] row = { rs.getInt("idlangilea"), rs.getString("izena"), rs.getString("abizena"),
 							rs.getString("nan"), rs.getString("posta"), rs.getString("pasahitza"),
 							rs.getString("matrikula"), rs.getInt("edukiera"), rs.getString("egoera"),
 							rs.getDouble("tarifa"), };
+					
+					// Taulan gehitzen joan hilarak
 					modelGidaria.addRow(row);
 				}
 			}
 		} catch (SQLException ex) {
+			
+			// Arazorik egon baldin bada erakutsi
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(this, "Errorea bilaketa egitean: " + ex.getMessage());
+			
 		}
 	}
 
+	/**
+	 * Langileak aldatzeko metodoa, taulan egindako aldaketak jasotzen dituena
+	 * @param id Aldaketak egin behar zaizkion langilearen id-a
+	 * @param zutabea Taulan editatu den zutabea, gure datu basean atributuari dagokiona
+	 * @param baloreBerria Erabiltzaileak taulan sartu duen balore berria
+	 */
 	private void langileaAldatu(int id, String zutabea, String baloreBerria) {
-		String sql = null; // Inicializamos la consulta SQL
-		String tabla = ""; // Definimos la tabla a modificar
+		
+		// Sql kontsulta eta editatu behar dugun taularen izena
+		String sql = null;
+		String taula = "";
 
-		// Determinar en qué tabla se encuentra el campo a actualizar
+		// Eguneratu behar den zutabearen arabera sql kontsulta bat sortu eta taula bat zehaztu
 		if (zutabea.equals("Izena") || zutabea.equals("Abizena") || zutabea.equals("NAN")) {
+			
 			sql = "UPDATE langilea SET " + zutabea.toLowerCase() + " = ? WHERE idlangilea = ?";
-			tabla = "langilea";
+			taula = "langilea";
+			
 		} else if (zutabea.equals("Posta") || zutabea.equals("Pasahitza")) {
+			
 			sql = "UPDATE erabiltzailea SET " + zutabea.toLowerCase()
 					+ " = ? WHERE iderabiltzailea = (SELECT erabiltzailea_iderabiltzailea FROM langilea WHERE idlangilea = ?)";
-			tabla = "erabiltzailea";
+			taula = "erabiltzailea";
+			
 		} else if (zutabea.equals("Matrikula") || zutabea.equals("Edukiera") || zutabea.equals("Egoera")
 				|| zutabea.equals("Tarifa")) {
+			
 			sql = "UPDATE taxista SET " + zutabea.toLowerCase() + " = ? WHERE langilea_idlangilea = ?";
-			tabla = "taxista";
+			taula = "taxista";
+			
 		}
 
-		// Si el campo no pertenece a ninguna tabla conocida, no se hace nada
+		// Ez baldin bada zutabe koinzidentziarik aurkitzen mezua erakutsi eta ezer ez egin
 		if (sql == null) {
-			JOptionPane.showMessageDialog(null, "Ezin da eguneratu: zutabea ez da balioduna." + zutabea);
+			
+			JOptionPane.showMessageDialog(null, "Ezin da eguneratu: zutabea ez da balioduna:" + zutabea);
 			return;
+			
 		}
 
-		// Ejecutar la actualización en la tabla correcta
+		// Taula egokian kontsulta exekutatzen saiatu
 		try (Connection conn = Konexioa.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
+			// Zutabetik jasotako balorea ezarri atributuari eta langilearen id-a zehaztu
 			ps.setString(1, baloreBerria);
 			ps.setInt(2, id);
+			
+			// Exekutatu
 			ps.executeUpdate();
 
-			JOptionPane.showMessageDialog(null, "Datuak eguneratu dira " + tabla + " taulan.");
+			// Dena ondo joan baldin bada erakutsi
+			JOptionPane.showMessageDialog(null, "Datuak eguneratu dira " + taula + " taulan.");
 
 		} catch (SQLException ex) {
+			
+			// Arazorik egon baldin bada erakutsi
 			ex.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Errorea datuak eguneratzean: " + ex.getMessage());
+			
 		}
 	}
 
 	public static void main(String[] args) {
+		
+		// Interfazea ikusgarri jarri
 		SwingUtilities.invokeLater(() -> new Interfazea().setVisible(true));
+		
 	}
 }
