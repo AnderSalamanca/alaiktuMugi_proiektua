@@ -1,5 +1,8 @@
 <?php
-session_start(); // Saioa abiarazten dugu
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start(); // Inicia la sesión si no está activa
+}
 
 // $activePage aldagaia definitzen ez bada, balio huts bat ezartzen zaio (pertsonalizatu daiteke)
 if (!isset($activePage)) {

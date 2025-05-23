@@ -26,8 +26,6 @@
       <div class="col-md-6">
         <h2>Zergatik Alaiktumugi aukeratu?</h2>
         <p>Zerbitzu azkarra, segurua eta fidagarria, bidaiariak konfiantzazko gidariekin konektatzen dituena.</p>
-        <!-- Saioa hasteko botoia, beltzez definituta -->
-        <button class="btn btn-dark" onclick="window.location.href='login.php';">Saioa hasi</button>
       </div>
       <!-- Irudiaren zutabea -->
       <div class="col-md-6">
@@ -43,8 +41,6 @@
       <div class="col-md-6 order-md-2">
         <h2>Eroso bidaiatu</h2>
         <p>Auto onenak eta esperientzia onena bidaia atseginak bermatzeko.</p>
-        <!-- Saioa hasteko botoia, beltzez definituta -->
-        <button class="btn btn-dark" onclick="window.location.href='login.php';">Saioa hasi</button>
       </div>
       <div class="col-md-6 order-md-1">
         <img src="irudiak/argazki2.jpg" alt="Gidaria 2" class="img-fluid rounded">

@@ -10,7 +10,7 @@ if (!isset($_SESSION['erabiltzailea']) || empty($_SESSION['erabiltzailea'])) {
 
   <head>
     <meta charset="UTF-8">
-    <title>Acceso Denegado</title>
+    <title>Sarrera denegatua</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS kargatzen dugu -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -41,7 +41,7 @@ if (!isset($_SESSION['erabiltzailea']) || empty($_SESSION['erabiltzailea'])) {
 
 <head>
   <meta charset="UTF-8">
-  <title>Tu Página</title>
+  <title>Historiala</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Bootstrap CSS kargatzen dugu -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -118,7 +118,7 @@ if (!isset($_SESSION['erabiltzailea']) || empty($_SESSION['erabiltzailea'])) {
     <?php else: ?>
       <!-- Ez badira bidai historikorik, alerta bat erakusten da -->
       <div class="alert alert-info" role="alert">
-        No tienes viajes archivados en tu historial.
+        Ez duzu bidaiarik zure historialean.
       </div>
     <?php endif; ?>
   </div>

@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sql = "INSERT INTO bidaiak (data, hasiera_kokapena, helmuga_kokapena, bezeroa_idbezeroa, hasiera_ordua, egoera)
                 VALUES ('$data', '$hasiera_kokapena', '$helmuga_kokapena', '$bezero_id', '$hasiera_ordua', 'Esleitu gabe')";
     if ($conn->query($sql) === TRUE) {
-      $message = "Viaje solicitado con éxito.";
+      $message = "Bidaia eskaera egin da.";
     } else {
       $message = "Error: " . $conn->error;
     }
