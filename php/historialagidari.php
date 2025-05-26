@@ -64,8 +64,8 @@ if (!isset($_SESSION['erabiltzailea']) || empty($_SESSION['idlangilea'])) {
                 h.helmuga_kokapena, 
                 h.xehetasunak,
                 h.prezioa,
-                COALESCE(l.izena, 'Gidari gabe') AS izena,
-                COALESCE(l.abizena, '') AS abizena
+                COALESCE(b.izena, 'Bezero gabe') AS izena,
+                COALESCE(b.abizena, '') AS abizena
               FROM historiala h
               LEFT JOIN bezeroa b ON h.idbezeroa = b.idbezeroa
               WHERE h.idgidaria = '$idgidaria'
@@ -80,13 +80,13 @@ if (!isset($_SESSION['erabiltzailea']) || empty($_SESSION['idlangilea'])) {
           <thead class="table-dark">
             <tr>
               <th>ID</th>
-              <th>Fecha</th>
-              <th>Hora de Inicio</th>
-              <th>Hora de Fin</th>
-              <th>Origen</th>
-              <th>Destino</th>
-              <th>Comentarios</th>
-              <th>Gidaria</th>
+              <th>Data</th>
+              <th>Hasiera ordua</th>
+              <th>Amaiera ordua</th>
+              <th>Jatorria</th>
+              <th>Helmuga</th>
+              <th>Xehetasunak</th>
+              <th>Bezeroa</th>
               <th>Prezioa</th>
             </tr>
           </thead>

@@ -1,133 +1,133 @@
 <?php
 session_start();
-require 'konexioa.php'; // Datu basearekin konexioa ezartzen dugu
-
-// Erabiltzailearen saioa egiaztatzen dugu: "idlangilea" ez bada, saioa hasi behar dela esaten du
+// Saioa abiarazten dugu eta egiaztatzen dugu erabiltzaileak 'idlangilea' balio bat duen ala ez.
 if (!isset($_SESSION['idlangilea']) || empty($_SESSION['idlangilea'])) {
-?>
-  <!DOCTYPE html>
-  <html lang="es">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>Acceso Denegado</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS kargatzen dugu -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  </head>
-  <!-- Saioa ez badago, alerta bat erakusten du eta 3 segundotan login.php-ra eramango du -->
-
-  <body class="bg-light d-flex align-items-center justify-content-center vh-100">
-    <div class="container">
-      <div class="alert alert-warning text-center" role="alert">
-        Langile bezala hasi saioa mesedez.
+    // Erabiltzailearen saioa ez badago, mezu bat erakusten dugu eta 3 segundotan login.php-ra eredu egiten dugu.
+    ?>
+    <!DOCTYPE html>
+    <html lang="eu">
+    <head>
+      <meta charset="UTF-8">
+      <title>Saioa Hasi Ez</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- Bootstrap CSS kargatzen dugu -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-light d-flex align-items-center justify-content-center vh-100">
+      <div class="container">
+        <!-- Alert mezua: erabiltzaileak langile bezala saioa hasi behar duela adierazten du -->
+        <div class="alert alert-warning text-center" role="alert">
+          Langile bezala hasi saioa mesedez.
+        </div>
       </div>
-    </div>
-    <script>
-      setTimeout(function() {
-        window.location.href = "login.php";
-      }, 3000);
-    </script>
-  </body>
-
-  </html>
-<?php
-  exit(); // Exekuzioa gelditzen dugu
+      <script>
+        // 3000 milisegundotan (3 segundotan) login.php-ra eramango dugu
+        setTimeout(function(){
+          window.location.href = "login.php";
+        }, 3000);
+      </script>
+    </body>
+    </html>
+    <?php
+    exit();
 }
 ?>
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="eu">
 <head>
-  <meta charset="UTF-8">
-  <title>Tu Página</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap CSS kargatzen dugu -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome CSS kargatzen dugu -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <meta charset="UTF-8">
+   <title>Langile Menua</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- Bootstrap CSS kargatzen dugu -->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   <!-- Font Awesome CSS kargatzen dugu -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <style>
+     /* Card-ek mouse-aren gainean daudenean handitzeko efektua ezartzen dugu */
+     .card-hover:hover {
+       transform: scale(1.02);
+       transition: transform 0.3s; 
+     }
+   </style>
 </head>
-
 <body>
-
-  <?php include 'navbar.php'; // Nabigazio barra sartzen dugu 
+  
+  <?php 
+    // Aktibatutako orriaren izena ezartzen dugu eta nabigazio barra sartzen dugu
+    $activePage = 'taxista';
+    include 'navbar.php'; 
   ?>
 
-  <div class="container mt-4">
-    <?php
-    // Saioan gordeta dagoen "idlangilea" ateratzen dugu
-    $idlangilea = $_SESSION['idlangilea'];
-    // SQL kontsulta: Gidariaren bidai historikoak ateratzen ditu
-    $sql = "SELECT 
-                h.idhistoriala, 
-                h.data, 
-                h.hasiera_ordua, 
-                h.bukaera_ordua, 
-                h.hasiera_kokapena, 
-                h.helmuga_kokapena, 
-                h.xehetasunak,
-                h.prezioa,
-                COALESCE(l.izena, 'Gidari gabe') AS izena,
-                COALESCE(l.abizena, '') AS abizena
-              FROM historiala h
-              LEFT JOIN langilea l ON h.idgidaria = l.idlangilea
-              WHERE h.idgidaria = '$idlangilea'
-              ORDER BY h.data DESC";
-
-    // Kontsulta exekutatzen dugu
-    $result = $conn->query($sql);
-    ?>
-
-    <?php if ($result && $result->num_rows > 0): ?>
-      <!-- Bidai historikoak erakusten dituen taula responsiboa -->
-      <div class="table-responsive">
-        <table class="table table-striped table-bordered">
-          <thead class="table-dark">
-            <tr>
-              <th>ID</th>
-              <th>Fecha</th>
-              <th>Hora de Inicio</th>
-              <th>Hora de Fin</th>
-              <th>Origen</th>
-              <th>Destino</th>
-              <th>Comentarios</th>
-              <th>Gidaria</th>
-              <th>Prezioa</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php while ($row = $result->fetch_assoc()): ?>
-              <tr>
-                <!-- Bidai historikoaren datu guztiak erakusten dira -->
-                <td><?= $row["idhistoriala"] ?></td>
-                <td><?= $row["data"] ?></td>
-                <td><?= $row["hasiera_ordua"] ?></td>
-                <td><?= $row["bukaera_ordua"] ?></td>
-                <td><?= $row["hasiera_kokapena"] ?></td>
-                <td><?= $row["helmuga_kokapena"] ?></td>
-                <td><?= $row["xehetasunak"] ?></td>
-                <td><?= $row["izena"] ?> <?= $row["abizena"] ?></td>
-                <td><?= $row["prezioa"] ?></td>
-              </tr>
-            <?php endwhile; ?>
-          </tbody>
-        </table>
+  <!-- Eduki nagusia: Langile Menua -->
+  <div class="container my-5">
+    <!-- Menuaren izenburua -->
+    <h1 class="mb-5 text-center">Langile Menua</h1>
+    <!-- Langilearen aukerak modu karten bidez banatuta -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      
+      <!-- Card 1: Bidaia Hartu -->
+      <div class="col">
+        <div class="card card-hover h-100 border-primary">
+          <div class="card-body text-center">
+            <!-- Karta titulua -->
+            <h5 class="card-title">Bidaia Hartu</h5>
+            <!-- Karta testua -->
+            <p class="card-text">
+              Aukeratu eskuragarri dauden bidaiak eta hartu zure hurrengo zerbitzua. Hemen ikusiko dituzu esleitu gabe dauden eskaerak.
+            </p>
+          </div>
+          <div class="card-footer text-center">
+            <!-- Bidaia hartzeko esteka -->
+            <a href="bidaiahartu.php" class="btn btn-primary">Hartu bidaia</a>
+          </div>
+        </div>
       </div>
-    <?php else: ?>
-      <!-- Ez bada bidai historikorik aurkitzen, alerta mezu bat erakusten da -->
-      <div class="alert alert-info" role="alert">
-        No tienes viajes archivados en tu historial.
+      
+      <!-- Card 2: Bidaia Amaitu -->
+      <div class="col">
+        <div class="card card-hover h-100 border-warning">
+          <div class="card-body text-center">
+            <!-- Karta titulua -->
+            <h5 class="card-title">Bidaia Amaitu</h5>
+            <!-- Karta testua -->
+            <p class="card-text">
+              Zure bidaia amaitu ondoren, hemen erregistratu ahal izango duzu zerbitzuaren bukaera. Bidaiaren xehetasunak eguneratu eta ordaintza kudeatu.
+            </p>
+          </div>
+          <div class="card-footer text-center">
+            <!-- Bidaia bukatzeko esteka -->
+            <a href="bidaiabukatu.php" class="btn btn-warning">Amaitu bidaia</a>
+          </div>
+        </div>
       </div>
-    <?php endif; ?>
+      
+      <!-- Card 3: Bidaien Historiala -->
+      <div class="col">
+        <div class="card card-hover h-100 border-success">
+          <div class="card-body text-center">
+            <!-- Karta titulua -->
+            <h5 class="card-title">Historiala</h5>
+            <!-- Karta testua -->
+            <p class="card-text">
+              Zure aurreko bidaiak kontsultatu eta zure zerbitzuei buruzko erregistroak ikusi. Informazio xehea zure historiako zerbitzu guztiei buruz.
+            </p>
+          </div>
+          <div class="card-footer text-center">
+            <!-- Historiala ikusteko esteka -->
+            <a href="historialagidari.php" class="btn btn-success">Ikusi historial</a>
+          </div>
+        </div>
+      </div>
+      
+    </div>
   </div>
 
+  <!-- Orriaren beheko atal: Footer -->
   <footer>
-    <?php include 'footer.php'; // Footer-a sartzen dugu 
-    ?>
+    <?php include 'footer.php'; ?>
   </footer>
 
-  <!-- Bootstrap JS Bundle (Popper barne) kargatzen dugu, interakzio osagaiak ondo funtzionatzeko -->
+  <!-- Bootstrap JS Bundle (Popper barne): Interakzio eta JS funtzioak kargatzeko -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
