@@ -44,7 +44,7 @@ public class Interfazea extends JFrame {
 	protected DefaultTableModel modelHistorial;
 	
 	// Filtroeen textfield-ak hasieratu
-	private JTextField txtFiltroData, txtFiltroGidaria, txtFiltroPrezioa;
+	private JTextField txtFiltroBezeroa, txtFiltroGidaria, txtFiltroPrezioa;
 	
 	// Filtroarentzako botoia
 	private JButton btnFiltratuHistoriala;
@@ -142,7 +142,7 @@ public class Interfazea extends JFrame {
 		JPanel panelHistoria = new JPanel(new BorderLayout());
 		
 		// Filtroen textfield-ak hasieratu
-		txtFiltroData = new JTextField(10);
+		txtFiltroBezeroa = new JTextField(10);
 		txtFiltroGidaria = new JTextField(5);
 		txtFiltroPrezioa = new JTextField(5);
 		
@@ -150,9 +150,9 @@ public class Interfazea extends JFrame {
 		btnFiltratuHistoriala = new JButton("Bilaketa");
 		
 		// Historialaren filtroen panelean labelak eta textfield-ak gehitu
-		panelFiltroHistoriala.add(new JLabel("Data:"));
-		panelFiltroHistoriala.add(txtFiltroData);
-		panelFiltroHistoriala.add(new JLabel("Gidaria ID:"));
+		panelFiltroHistoriala.add(new JLabel("Bezero izena edo abizena:"));
+		panelFiltroHistoriala.add(txtFiltroBezeroa);
+		panelFiltroHistoriala.add(new JLabel("Gidari izena edo abizena:"));
 		panelFiltroHistoriala.add(txtFiltroGidaria);
 		panelFiltroHistoriala.add(new JLabel("Prezioa min:"));
 		panelFiltroHistoriala.add(txtFiltroPrezioa);
@@ -161,7 +161,7 @@ public class Interfazea extends JFrame {
 		
 		// Historialaren taularen zutabeak definitu
 		String[] zutabeHistorial = { "ID", "Hasiera Kokapena", "Helmuga Kokapena", "Data", "Hasiera Ordua",
-				"Bukaera Ordua", "Xehetasunak", "ID Gidaria", "ID Bezeroa", "Bidaiak", "Prezioa" };
+				"Bukaera Ordua", "Xehetasunak", "Gidaria", "Bezeroa", "Bidaiak", "Prezioa" };
 		
 		// Modelua editatu
 		modelHistorial = new DefaultTableModel(zutabeHistorial, 0) {
@@ -209,6 +209,10 @@ public class Interfazea extends JFrame {
 
 		// Tabbed pane-a gehitu
 		add(tabbedPane, BorderLayout.CENTER);
+		
+		// Defektuzko botoien baloreak aldatu
+		UIManager.put("OptionPane.okButtonText", "Onartu");
+		UIManager.put("OptionPane.cancelButtonText", "Ezeztatu");
 
 		
 
@@ -323,7 +327,7 @@ public class Interfazea extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				// Jasotako baloreak gorde
-				String dataFiltro = txtFiltroData.getText().trim();
+				String dataFiltro = txtFiltroBezeroa.getText().trim();
 				String gidariaFiltro = txtFiltroGidaria.getText().trim();
 				String prezioaFiltro = txtFiltroPrezioa.getText().trim();
 				
@@ -376,44 +380,51 @@ public class Interfazea extends JFrame {
 
 	/**
 	 * Historiala kargatzeko funtzioa, parametroak jasotzen ditu filtroak erabili baldin badira
-	 * @param dataFiltro Erabiltzaileak sartutako data
+	 * @param bezeroFiltro Erabiltzaileak sartutako data
 	 * @param gidariaFiltro
 	 * @param prezioaFiltro
 	 */
-	private void historialaKargatu(String dataFiltro, String gidariaFiltro, String prezioaFiltro) {
+	private void historialaKargatu(String bezeroFiltro, String gidariaFiltro, String prezioaFiltro) {
 		
 		// Taula hustu
 		modelHistorial.setRowCount(0);
 
 		// Historialaren select-a 
 		String sql = "SELECT idhistoriala, hasiera_kokapena, helmuga_kokapena, data, "
-				+ "hasiera_ordua, bukaera_ordua, xehetasunak, idgidaria, idbezeroa, "
-				+ "bidaiak_idbidaiak, prezioa FROM historiala WHERE 1=1";
-
+		           + "hasiera_ordua, bukaera_ordua, xehetasunak, h.idgidaria, h.idbezeroa, "
+		           + "bidaiak_idbidaiak, prezioa, CONCAT(b.izena, ' ', b.abizena) AS bezeroa, "
+		           + "CONCAT(l.izena, ' ', l.abizena) AS gidaria "
+		           + "FROM historiala h "
+		           + "LEFT JOIN langilea l ON h.idgidaria = l.idlangilea "
+		           + "LEFT JOIN bezeroa b ON h.idbezeroa = b.idbezeroa "
+		           + "WHERE 1=1";
 		// Jasotako baloreen arabera WHERE-eri gauzak gehitu
-		if (!dataFiltro.isEmpty())
-			sql += " AND data = ?";
-		
+		if (!bezeroFiltro.isEmpty())
+		    sql += " AND (b.izena LIKE ? OR b.abizena LIKE ?)";
+
 		if (!gidariaFiltro.isEmpty())
-			sql += " AND idgidaria = ?";
-		
+		    sql += " AND (l.izena LIKE ? OR l.abizena LIKE ?)";
+
 		if (!prezioaFiltro.isEmpty())
-			sql += " AND prezioa >= ?";
+		    sql += " AND prezioa >= ?";
 
 		try (Connection conn = Konexioa.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
 			// Indexa hasieratu
 			int index = 1;
 			
-			// Jasotako baloreen arabera galdera ikurrei baloreak eman
-			if (!dataFiltro.isEmpty())
-				ps.setString(index++, dataFiltro);
-			
-			if (!gidariaFiltro.isEmpty())
-				ps.setInt(index++, Integer.parseInt(gidariaFiltro));
-			
-			if (!prezioaFiltro.isEmpty())
-				ps.setDouble(index++, Double.parseDouble(prezioaFiltro));
+			if (!bezeroFiltro.isEmpty()) {
+		        ps.setString(index++, "%" + bezeroFiltro + "%"); // Izenak bilatzeko LIKE erabili
+		        ps.setString(index++, "%" + bezeroFiltro + "%"); // Abizenak ere bilatzeko LIKE
+		    }
+
+		    if (!gidariaFiltro.isEmpty()) {
+		        ps.setString(index++, "%" + gidariaFiltro + "%"); // Izenak bilatzeko LIKE erabili
+		        ps.setString(index++, "%" + gidariaFiltro + "%"); // Abizenak ere bilatzeko LIKE
+		    }
+
+		    if (!prezioaFiltro.isEmpty())
+		        ps.setDouble(index++, Double.parseDouble(prezioaFiltro));
 
 			// Kontsulta exekutatu eta resultset batean gordetzen saiatu
 			try (ResultSet rs = ps.executeQuery()) {
@@ -423,9 +434,9 @@ public class Interfazea extends JFrame {
 					
 					// Hilarak sortu datu basetik lortutako baloreekin
 					Object[] row = { rs.getInt("idhistoriala"), rs.getString("hasiera_kokapena"),
-							rs.getString("helmuga_kokapena"), rs.getString("data"), rs.getString("hasiera_ordua"),
-							rs.getString("bukaera_ordua"), rs.getString("xehetasunak"), rs.getInt("idgidaria"),
-							rs.getInt("idbezeroa"), rs.getInt("bidaiak_idbidaiak"), rs.getDouble("prezioa") };
+		                    rs.getString("helmuga_kokapena"), rs.getString("data"), rs.getString("hasiera_ordua"),
+		                    rs.getString("bukaera_ordua"), rs.getString("xehetasunak"), rs.getString("gidaria"),
+		                    rs.getString("bezeroa"), rs.getInt("bidaiak_idbidaiak"), rs.getDouble("prezioa") };
 					
 					// Hilarak gehitu
 					modelHistorial.addRow(row);
